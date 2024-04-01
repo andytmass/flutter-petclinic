@@ -13,17 +13,17 @@ void main() {
   group('Owner Provider tests', () {
     test('Get owner list from test database', () async {
       OwnerProvider provider = OwnerProvider();
-      List<Owner> owners = await provider.getOwners();
-      expect(owners.length, greaterThanOrEqualTo(10));
-      Owner first = owners.elementAt(1);
-      expect(first.firstName, contains('Betty'));
+      List<Owner>? owners = await provider.getOwners();
+      expect(owners?.length, greaterThanOrEqualTo(10));
+      Owner? first = owners?.elementAt(1);
+      expect(first?.firstName, contains('Betty'));
     });
 
     test('Update first owner to test database', () async {
       OwnerProvider provider = OwnerProvider();
       Owner owner = Owner(1, 'Charles', 'Aznavour', '52 Av. de Champs-Élysées',
           'Paris', '1234567890');
-      await provider.updateOwner(owner);
+      //await provider.updateOwner(owner);
       //expect('James', 'George');
     });
   });

@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:yaml/yaml.dart';
+import 'package:global_configuration/global_configuration.dart';
 
 /**
  *
@@ -9,28 +9,25 @@ class PetClinic {
   /**
    *
    */
-  String _username;
+  late String _username;
 
   /**
    *
    */
-  String _password;
+  late String _password;
 
   /**
    *
    */
-  String _address;
+  late String _address;
 
   /**
    *
    */
   PetClinic() {
-    File file = new File('petclinic.yaml');
-    String yamlString = file.readAsStringSync();
-    Map yaml = loadYaml(yamlString);
-    _username = yaml['username'];
-    _password = yaml['password'];
-    _address = yaml['address'];
+    _username = GlobalConfiguration().getString("username");
+    _password = GlobalConfiguration().getString("password");
+    _address = GlobalConfiguration().getString("address");
   }
 
   String get address => _address;

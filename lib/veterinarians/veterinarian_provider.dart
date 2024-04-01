@@ -17,7 +17,7 @@ class VeterinarianProvider {
   /**
    *
    */
-  Future<List<Veterinarian>> getVeterinarians() async {
+  Future<List<Veterinarian>?> getVeterinarians() async {
     var config = PetClinic();
     String username = config.username;
     String password = config.password;
@@ -25,8 +25,9 @@ class VeterinarianProvider {
     String basicAuth =
         'Basic ' + base64Encode(utf8.encode('$username:$password'));
     log("Inside provider");
-    final serverEndpoint = '$address//api/vets';
-    final response = await http.get(serverEndpoint,
+    final serverEndpoint = '$address/api/vets';
+    final response = await http.get(
+        Uri.parse(serverEndpoint),
         headers: <String, String>{'authorization': basicAuth});
     log("After response");
 

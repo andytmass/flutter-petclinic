@@ -3,12 +3,15 @@
 // is governed by a BSD-style license that can be found in the LICENSE file
 
 import 'package:flutter/material.dart';
+import 'package:global_configuration/global_configuration.dart';
 
 import 'petclinic_app.dart';
 
 /**
  *
  */
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await GlobalConfiguration().loadFromPath("assets/cfg/app_settings.json");
   runApp(PetClinicApp());
 }

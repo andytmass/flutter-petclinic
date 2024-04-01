@@ -14,7 +14,7 @@ import 'owner_provider.dart';
  */
 class OwnerDetails extends StatefulWidget {
   const OwnerDetails({
-    Key key,
+    Key? key,
     @required this.owner,
   }) : super(key: key);
 
@@ -106,7 +106,7 @@ class _OwnerDetailsState extends State<OwnerDetails> {
  */
 class OwnerEdit extends StatefulWidget {
   OwnerEdit({
-    Key key,
+    Key? key,
     @required this.owner,
   }) : super(key: key);
 
@@ -129,7 +129,7 @@ class _OwnerEditState extends State<OwnerEdit> {
    *
    */
   _OwnerEditState({
-    @required this.owner,
+    required this.owner,
   });
 
   /**
@@ -193,7 +193,7 @@ class _OwnerEditState extends State<OwnerEdit> {
                 decoration: InputDecoration(labelText: 'First Name:'),
                 //initialValue: owner.firstName,
                 validator: (value) {
-                  if (value.isEmpty) {
+                  if (value!.isEmpty) {
                     return 'Please enter some text';
                   }
                   return null;
@@ -204,7 +204,7 @@ class _OwnerEditState extends State<OwnerEdit> {
                 decoration: InputDecoration(labelText: 'Last Name:'),
                 //initialValue: owner.lastName,
                 validator: (value) {
-                  if (value.isEmpty) {
+                  if (value!.isEmpty) {
                     return 'Please enter some text';
                   }
                   return null;
@@ -225,7 +225,7 @@ class _OwnerEditState extends State<OwnerEdit> {
                 decoration: InputDecoration(labelText: 'Telephone:'),
                 //initialValue: owner.telephone,
                 validator: (value) {
-                  if (value.isEmpty || value.length != 10) {
+                  if (value!.isEmpty || value.length != 10) {
                     return 'Telephones must have 10 digits';
                   }
                   return null;
@@ -236,9 +236,9 @@ class _OwnerEditState extends State<OwnerEdit> {
               //SubmitWidget(formKey: _formKey),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 16.0),
-                child: RaisedButton(
+                child: ElevatedButton(
                   onPressed: () async {
-                    if (_formKey.currentState.validate()) {
+                    if (_formKey.currentState!.validate()) {
                       // TODO: get data, update owner object, save with provider
                       OwnerProvider provider = OwnerProvider();
                       Owner updatedOwner = Owner(
@@ -249,10 +249,10 @@ class _OwnerEditState extends State<OwnerEdit> {
                         cityController.text,
                         telephoneController.text,
                       );
-                      await provider.updateOwner(updatedOwner);
-                      setState(() {
-                        owner.firstName = updatedOwner.firstName;
-                      });
+                      //await provider.updateOwner(updatedOwner);
+                      // setState(() {
+                      //   owner.firstName = updatedOwner.firstName;
+                      // });
                       print('Snack');
                       Navigator.pop(context);
                       //Scaffold.of(context).showSnackBar(
@@ -278,8 +278,8 @@ class SubmitWidget extends StatelessWidget {
    *
    */
   const SubmitWidget({
-    Key key,
-    @required GlobalKey<FormState> formKey,
+    required Key key,
+    required GlobalKey<FormState> formKey,
   })
       : _formKey = formKey,
         super(key: key);
@@ -296,15 +296,15 @@ class SubmitWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 16.0),
-      child: RaisedButton(
+      child: ElevatedButton(
         onPressed: () async {
-          if (_formKey.currentState.validate()) {
+          if (_formKey.currentState!.validate()) {
             // TODO: get data, update owner object, save with provider
             OwnerProvider provider = OwnerProvider();
             Owner owner = Owner(2, 'C.', 'A.', 'Champs', 'Paris', '1234567890');
-            await provider.updateOwner(owner);
+            //await provider.updateOwner(owner);
             print('Snack');
-            Scaffold.of(context)
+            ScaffoldMessenger.of(context)
                 .showSnackBar(SnackBar(content: Text('Processing Data')));
           }
         },

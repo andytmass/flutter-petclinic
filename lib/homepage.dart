@@ -14,7 +14,7 @@ class MyHomepage extends StatefulWidget {
   /**
    *
    */
-  MyHomepage({Key key}) : super(key: key);
+  MyHomepage({Key? key}) : super(key: key);
 
   /**
    *
@@ -73,15 +73,15 @@ class _MyHomepageState extends State<MyHomepage> {
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
-            title: Text('Home'),
+            label: 'Home'
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.people),
-            title: Text('Owners'),
+            label: 'Owners'
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.local_hospital),
-            title: Text('Vets'),
+              label: 'Vets'
           ),
         ],
         currentIndex: _selectedIndex,
