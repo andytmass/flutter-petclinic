@@ -1,6 +1,7 @@
 import 'dart:io';
 
-import 'package:yaml/yaml.dart';
+import 'package:global_configuration/global_configuration.dart';
+import 'dart:io' show Platform;
 
 /**
  *
@@ -9,28 +10,39 @@ class PetClinic {
   /**
    *
    */
-  String _username;
+  late String _username;
 
   /**
    *
    */
-  String _password;
+  late String _password;
 
   /**
    *
    */
-  String _address;
+  late String _address;
 
   /**
    *
    */
   PetClinic() {
-    File file = new File('petclinic.yaml');
-    String yamlString = file.readAsStringSync();
-    Map yaml = loadYaml(yamlString);
-    _username = yaml['username'];
-    _password = yaml['password'];
-    _address = yaml['address'];
+    _username = GlobalConfiguration().getString("username");
+    _password = GlobalConfiguration().getString("password");
+
+    String address = GlobalConfiguration().getString("address");
+
+    String localhost_from_ios = 'localhost';
+    String localhost_from_android = '10.0.2.2';
+
+    if (address.contains(localhost_from_ios)) { //localhost
+      if (Platform.isAndroid) { //android emulator uses 10.0.2.2 as localhost
+        _address = address.replaceAll(localhost_from_ios, localhost_from_android);
+      } else { //ios, macos use 127.0.0.1
+        _address = address;
+      }
+    } else { //production env
+      _address = address;
+    }
   }
 
   String get address => _address;

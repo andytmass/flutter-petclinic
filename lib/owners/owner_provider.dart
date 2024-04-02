@@ -18,7 +18,7 @@ class OwnerProvider {
   /**
    *
    */
-  Future<List<Owner>> getOwners() async {
+  Future<List<Owner>?> getOwners() async {
     var config = PetClinic();
     String username = config.username;
     String password = config.password;
@@ -27,8 +27,10 @@ class OwnerProvider {
         'Basic ' + base64Encode(utf8.encode('$username:$password'));
     log("Inside provider");
     final serverEndpoint = '$address/api/owners';
-    final response = await http.get(serverEndpoint,
-        headers: <String, String>{'authorization': basicAuth});
+    final response = await http.get(
+        Uri.parse(serverEndpoint),
+        headers: <String, String>{'authorization': basicAuth}
+    );
     log("After response");
 
     if (response.statusCode == 200) {
@@ -60,7 +62,7 @@ class OwnerProvider {
     final serverEndpoint =
         'http://192.168.15.47:9966/petclinic/api/owners/${owner.id}';
     final response = await http.put(
-      serverEndpoint,
+      Uri.parse(serverEndpoint),
       headers: <String, String>{
         HttpHeaders.authorizationHeader: basicAuth,
         HttpHeaders.contentTypeHeader: 'application/json; charset=UTF-8',
